@@ -11,5 +11,5 @@ app.get('/', function(req, res){
   res.send('Astropay-Ripple');  
 });
 
-app.listen();
+app.listen(process.env.port || 7777);
 
