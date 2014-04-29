@@ -8,20 +8,21 @@ app.use(bodyParser());
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
 app.post('/payments/confirmations', function(req, res){
-  console.log('before the try');
-  try {
-    console.log('about to post to the gateway');
-    request.post('https://75.101.201.120/v1/deposits', { form: {
-      currency: req.body.x_currency,
-      amount: req.body.x_amount,
-      externalAccountId: req.body.x_iduser,
-      data: req.body
-    }}, function(err, resp) {
-      console.log(err, resp);
-    });
-  } catch(e) {
-    console.log('error', e);
-  }
+  console.log(req.body);
+  console.log('about to post to the gateway');
+  request.post('https://75.101.201.120/v1/deposits', { form: {
+    currency: req.body.x_currency,
+    amount: req.body.x_amount,
+    externalAccountId: req.body.x_iduser,
+    data: req.body
+  }}, function(err, resp) {
+    if (err){
+      res.send(500);
+    } else {
+      res.send(200);
+    }
+    console.log(err, resp);
+  });
 });
 
 app.post('/', function(req, res){
